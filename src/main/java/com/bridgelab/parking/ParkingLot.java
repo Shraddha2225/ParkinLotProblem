@@ -2,18 +2,42 @@ package com.bridgelab.parking;
 
 public class ParkingLot {
 
-    private Object Car;
+    private final int actualCapacity;
+    private int currentCapacity;
+    private Object vehicle;
+    private ParkingLotOwner owner;
 
-    public boolean getPark(Object Car) {
-        this.Car = Car;
-        return true;
+
+    public ParkingLot(int capacity) {
+        this.actualCapacity = capacity;
+        this.currentCapacity = 0;
     }
 
-    public boolean getUnParked(Object Car) {
-        if (this.Car.equals(Car)) {
-            this.Car = null;
+    public void registerOwner(ParkingLotOwner owner) {
+        this.owner=owner;
+    }
+
+    public void park(Object vehicle) throws ParkingLotException {
+        if (this.currentCapacity == this.actualCapacity){
+            owner.capacityIsFull();
+            throw new ParkingLotException("parkinglot is full");
+        }
+        this.currentCapacity++;
+        this.vehicle = vehicle;
+    }
+
+    public boolean isVehicalParked(Object vehicle) {
+        if (this.vehicle.equals(vehicle))
+            return true;
+        return false;
+    }
+
+    public boolean getUnParked(Object vehicle) {
+        if (this.vehicle.equals(vehicle)) {
+            this.vehicle = null;
             return true;
         }
         return false;
     }
+
 }

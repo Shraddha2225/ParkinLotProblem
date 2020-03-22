@@ -5,25 +5,46 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ParkingLotTest {
-    private ParkingLot parkingLot;
+    ParkingLot parkingLot = null;
+    Object vehicle = null;
 
     @Before
     public void setUp() {
-        parkingLot = new ParkingLot();
+        vehicle = new Object();
+        parkingLot = new ParkingLot(3);
     }
 
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
-        System.out.println("WELCOME TO PARKING LOT PROBLEM");
-        boolean park = parkingLot.getPark(new Object());
-        Assert.assertTrue(park);
+        try {
+            parkingLot.park(vehicle);
+            boolean Isparked = parkingLot.isVehicalParked(vehicle);
+            Assert.assertTrue(Isparked);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void givenVehicle_WhenUnParked_ShouldReturnTrue() {
-        Object Car=new Object();
-        parkingLot.getPark(Car);
-        boolean unParked = parkingLot.getUnParked(Car);
-        Assert.assertTrue(unParked);
+    public void givenVechical_WhenAlReadyParked_ShouldReturnFalse() {
+        try {
+            parkingLot.park(vehicle);
+            parkingLot.park(new Object());
+        } catch (ParkingLotException e) {
+            Assert.assertEquals("parkinglot is full", e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+    @Test
+    public void givenVehicle_WhenUnParked_ShouldReturnTrue() throws ParkingLotException {
+        try {
+            parkingLot.park(vehicle);
+            boolean isUnparked = parkingLot.getUnParked(vehicle);
+            Assert.assertTrue(isUnparked);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
