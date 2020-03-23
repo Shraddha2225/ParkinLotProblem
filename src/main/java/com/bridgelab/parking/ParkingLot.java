@@ -5,14 +5,13 @@ import java.util.List;
 
 public class ParkingLot {
     private int actualCapacity;
-    private int currentCapacity;
     private List vehicles;
     private ParkingLotOwner owner;
+    private AirportSecurity security;
 
     public ParkingLot(int capacity) {
         this.vehicles=new ArrayList();
         this.actualCapacity = capacity;
-        this.currentCapacity = 0;
     }
 
     public void registerOwner(ParkingLotOwner owner) {
@@ -23,11 +22,20 @@ public class ParkingLot {
         this.actualCapacity=capacity;
     }
 
+    public void registerSecurity(AirportSecurity airportSecurty) {
+        this.security =airportSecurty;
+    }
+
     public void park(Object vehicle) throws ParkingLotException {
         if (this.vehicles.size() == this.actualCapacity){
             owner.capacityIsFull();
+            security.capacityIsFull();
             throw new ParkingLotException("parkinglot is full");
         }
+
+        if(isVehicleParked(vehicle))
+            throw new ParkingLotException("vehicle already parked");
+
         this.vehicles.add(vehicle);
     }
 

@@ -59,7 +59,19 @@ public class ParkingLotTest {
 
             Assert.assertTrue(isParked1 && isParked2);
         } catch (ParkingLotException e) {
+        }
+    }
 
+    @Test
+    public void givenWhenLotIsFull_ShouldInformTheSecurity() {
+        AirportSecurity airportSecurity = new AirportSecurity();
+        parkingLot.registerSecurity(airportSecurity);
+        try {
+            parkingLot.park(vehicle);
+            parkingLot.park(new Object());
+        } catch (ParkingLotException e) {
+            boolean capacityFull = airportSecurity.isCapacityFull();
+            Assert.assertTrue(capacityFull);
         }
     }
 }
