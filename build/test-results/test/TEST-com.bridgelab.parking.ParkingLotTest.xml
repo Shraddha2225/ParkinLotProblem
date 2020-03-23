@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-03-22T17:51:48" hostname="DESKTOP-PIERT2Q" time="0.002">
+<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-03-23T21:02:23" hostname="DESKTOP-PIERT2Q" time="0.012">
   <properties/>
-  <testcase name="givenVehicle_WhenUnParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_WhenUnParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.005"/>
   <testcase name="givenVehicle_WhenParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenCapacityIs2_ShouldAbleToPark2Vechile" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
   <testcase name="givenVechical_WhenAlReadyParked_ShouldReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

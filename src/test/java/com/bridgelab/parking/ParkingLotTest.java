@@ -11,14 +11,14 @@ public class ParkingLotTest {
     @Before
     public void setUp() {
         vehicle = new Object();
-        parkingLot = new ParkingLot(3);
+        parkingLot = new ParkingLot(2);
     }
 
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
         try {
             parkingLot.park(vehicle);
-            boolean Isparked = parkingLot.isVehicalParked(vehicle);
+            boolean Isparked = parkingLot.isVehicleParked(vehicle);
             Assert.assertTrue(Isparked);
         } catch (ParkingLotException e) {
             e.printStackTrace();
@@ -47,4 +47,19 @@ public class ParkingLotTest {
         }
     }
 
+    @Test
+    public void givenCapacityIs2_ShouldAbleToPark2Vechile() {
+        Object vehicle2 = new Object();
+        parkingLot.setCapacity(2);
+        try {
+            parkingLot.park(vehicle);
+            parkingLot.park(vehicle2);
+            boolean isParked1 = parkingLot.isVehicleParked(vehicle);
+            boolean isParked2 = parkingLot.isVehicleParked(vehicle2);
+
+            Assert.assertTrue(isParked1 && isParked2);
+        } catch (ParkingLotException e) {
+
+        }
+    }
 }
