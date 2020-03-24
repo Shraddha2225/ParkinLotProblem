@@ -74,4 +74,16 @@ public class ParkingLotTest {
             Assert.assertTrue(capacityFull);
         }
     }
+
+    @Test
+    public void givenWhenLotSpaceAgain_ShouldInformTheOwner() {
+        ParkingLotOwner owner = new ParkingLotOwner();
+        try {
+            parkingLot.park(vehicle);
+            parkingLot.park(new Object());
+        } catch (ParkingLotException e) {
+            boolean capacityFull = owner.isCapacityFull();
+            Assert.assertTrue(capacityFull);
+        }
+    }
 }
