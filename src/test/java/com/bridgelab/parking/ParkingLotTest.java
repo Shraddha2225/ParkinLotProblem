@@ -4,13 +4,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingLotTest {
     ParkingLot parkingLot = null;
     Object vehicle = null;
+    List vehicleList;
+    Object vehicle1 = null;
 
     @Before
     public void setUp() {
         vehicle = new Object();
+        vehicle1 =new Object();
+        vehicleList = new ArrayList();
         parkingLot = new ParkingLot(2);
     }
 
@@ -31,7 +38,7 @@ public class ParkingLotTest {
             parkingLot.park(vehicle);
             parkingLot.park(new Object());
         } catch (ParkingLotException e) {
-            Assert.assertEquals("parkinglot is full", e.getMessage());
+            Assert.assertEquals("vehicle already parked", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -65,7 +72,7 @@ public class ParkingLotTest {
     @Test
     public void givenWhenLotIsFull_ShouldInformTheSecurity() {
         AirportSecurity airportSecurity = new AirportSecurity();
-        parkingLot.registerSecurity(airportSecurity);
+        parkingLot.registerParkingLotOwner(airportSecurity);
         try {
             parkingLot.park(vehicle);
             parkingLot.park(new Object());
@@ -85,5 +92,52 @@ public class ParkingLotTest {
             boolean capacityFull = owner.isCapacityFull();
             Assert.assertTrue(capacityFull);
         }
+    }
+
+    @Test
+    public void givenInitializeParkingLot_ShouldReturnParkingCapacity() {
+        parkingLot.setCapacity(10);
+        int parkingLotCapacity = parkingLot.initializeParkingLot();
+        Assert.assertEquals(10,parkingLotCapacity);
+    }
+
+    @Test
+    public void givenParkingLot_ShouldReturnAvailableSlots() {
+        vehicleList.add(0);
+        vehicleList.add(1);
+        parkingLot.setCapacity(2);
+        parkingLot.initializeParkingLot();
+        ArrayList emptySlotList = parkingLot.getSlot();
+        Assert.assertEquals(vehicleList, emptySlotList);
+    }
+
+    @Test
+    public void givenParkingLot_WhenParkWithProvidedSlot_ShouldReturnTrue() throws ParkingLotException {
+        parkingLot.setCapacity(3);
+        parkingLot.parked(0, vehicle);
+        boolean vehicleParked = parkingLot.isVehicleParked(vehicle);
+        Assert.assertTrue(vehicleParked);
+    }
+
+    @Test
+    public void givenParkAndUnParkVehicles_ShouldReturnEmptySlots() throws ParkingLotException {
+        vehicleList.add(0);
+        vehicleList.add(2);
+        parkingLot.setCapacity(3);
+        parkingLot.parked(0, vehicle);
+        parkingLot.parked(1,vehicle1);
+        parkingLot.getUnParked(vehicle);
+        ArrayList emptySlotList = parkingLot.getSlot();
+        Assert.assertEquals(vehicleList, emptySlotList);
+    }
+
+    @Test
+    public void givenParkingLotOnEmptySlot_ShouldReturnTrue() throws ParkingLotException {
+        parkingLot.setCapacity(10);
+        parkingLot.initializeParkingLot();
+        ArrayList<Integer> emptySlotList = parkingLot.getSlot();
+        parkingLot.parked(emptySlotList.get(1), vehicle);
+        boolean vehiclePark = parkingLot.isVehicleParked(vehicle);
+        Assert.assertTrue(vehiclePark);
     }
 }

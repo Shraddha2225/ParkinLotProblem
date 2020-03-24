@@ -1,6 +1,6 @@
 package com.bridgelab.parking;
 
-public class ParkingLotException extends Throwable {
+public class ParkingLotException extends RuntimeException{
     public ParkingLotException(String message) {
         super(message);
     }

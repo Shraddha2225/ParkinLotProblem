@@ -2,38 +2,71 @@ package com.bridgelab.parking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ParkingLot {
 
     private int actualCapacity;
-    private List vehicles;
-    private ParkingLotObserver parkingInfo;
+   // private List vehicles;
+    public List<Object> vehicles;
+    private List<ParkingLotObserver> parkLotObserver;
+    private int slot = 0;
+   // private ParkingLotObserver parkingInfo;
 
     public ParkingLot(int capacity) {
-        this.vehicles = new ArrayList();
-        this.actualCapacity = capacity;
+       /* this.vehicles = new ArrayList();
+        this.actualCapacity = capacity;*/
+
+        setCapacity(capacity);
+        this.parkLotObserver = new ArrayList<>();
     }
 
-    public void registerOwner(ParkingLotOwner owner) {
-        this.parkingInfo = owner;
+    public void registerParkingLotOwner(AirportSecurity observer) {
+       // this.parkingInfo = owner;
+        this.parkLotObserver.add(observer);
     }
 
     public  void setCapacity(int capacity) {
-        this.actualCapacity=capacity;
+        this.actualCapacity = capacity;
+        initializeParkingLot();
     }
 
-    public void registerSecurity(AirportSecurity airportSecurty) {
-        this.parkingInfo = airportSecurty;
+    public int initializeParkingLot() {
+        this.vehicles=new ArrayList<>();
+        IntStream.range(0,this.actualCapacity).forEach(slots ->vehicles.add(null));
+        return vehicles.size();
     }
+
+
+    public ArrayList<Integer> getSlot() {
+        ArrayList<Integer> emptySlots = new ArrayList<>();
+        for (int slot = 0; slot < this.actualCapacity; slot++) {
+            if (this.vehicles.get(slot) == null)
+                emptySlots.add(slot);
+        }
+        return emptySlots;
+    }
+
+    /*public void registerSecurity(AirportSecurity airportSecurity) {
+        this.parkingInfo = airportSecurity;
+    }*/
 
     public void park(Object vehicle) throws ParkingLotException {
-        if (this.vehicles.size() == this.actualCapacity){
-            parkingInfo.capacityIsFull();
-            throw new ParkingLotException("parkinglot is full");
-        }
         if(isVehicleParked(vehicle))
             throw new ParkingLotException("vehicle already parked");
-        this.vehicles.add(vehicle);
+        if (vehicles.size() == actualCapacity && !vehicles.contains(null)) {
+            for (ParkingLotObserver observer : parkLotObserver)
+                observer.capacityIsFull();
+            throw new ParkingLotException("parkinglot is full");
+    }
+        parked(slot++, vehicle);
+    }
+
+    public void parked(int slot, Object vehicle) throws ParkingLotException {
+        if (isVehicleParked(vehicle)) {
+            throw new ParkingLotException("VEHICLE ALREADY PARK");
+        }
+        this.vehicles.set(slot, vehicle);
     }
 
     public boolean isVehicleParked(Object vehicle) {
@@ -45,7 +78,8 @@ public class ParkingLot {
     public boolean getUnParked(Object vehicle) {
         if ( vehicle == null)  return false;
         if (this.vehicles.contains(vehicle)) {
-            this.vehicles.remove(vehicle);
+            //this.vehicles.remove(vehicle);
+            this.vehicles.set(this.vehicles.indexOf(vehicle), null);
             return true;
         }
         return false;
