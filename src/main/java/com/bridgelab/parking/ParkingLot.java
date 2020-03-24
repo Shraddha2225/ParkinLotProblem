@@ -84,4 +84,11 @@ public class ParkingLot {
         }
         return false;
     }
+
+    //find a vehicle if it is parked//
+    public int findVehicleInParkingLot(Object vehicle) {
+        if(!this.vehicles.contains(vehicle))
+            throw new ParkingLotException("Vehicle Is Absent");
+        return this.vehicles.indexOf(vehicle);
+    }
 }
