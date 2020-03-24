@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-03-23T21:22:18" hostname="DESKTOP-PIERT2Q" time="0.006">
+<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-03-24T02:42:40" hostname="DESKTOP-PIERT2Q" time="0.007">
   <properties/>
   <testcase name="givenVehicle_WhenUnParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
   <testcase name="givenVehicle_WhenParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
-  <testcase name="givenCapacityIs2_ShouldAbleToPark2Vechile" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
-  <testcase name="givenWhenLotIsFull_ShouldInformTheSecurity" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenCapacityIs2_ShouldAbleToPark2Vechile" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenWhenLotIsFull_ShouldInformTheSecurity" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
   <testcase name="givenVechical_WhenAlReadyParked_ShouldReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

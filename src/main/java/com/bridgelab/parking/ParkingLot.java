@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLot {
+
     private int actualCapacity;
     private List vehicles;
-    private ParkingLotOwner owner;
-    private AirportSecurity security;
+    private ParkingLotObserver parkingInfo;
 
     public ParkingLot(int capacity) {
-        this.vehicles=new ArrayList();
+        this.vehicles = new ArrayList();
         this.actualCapacity = capacity;
     }
 
     public void registerOwner(ParkingLotOwner owner) {
-        this.owner = owner;
+        this.parkingInfo = owner;
     }
 
     public  void setCapacity(int capacity) {
@@ -23,19 +23,16 @@ public class ParkingLot {
     }
 
     public void registerSecurity(AirportSecurity airportSecurty) {
-        this.security =airportSecurty;
+        this.parkingInfo = airportSecurty;
     }
 
     public void park(Object vehicle) throws ParkingLotException {
         if (this.vehicles.size() == this.actualCapacity){
-            owner.capacityIsFull();
-            security.capacityIsFull();
+            parkingInfo.capacityIsFull();
             throw new ParkingLotException("parkinglot is full");
         }
-
         if(isVehicleParked(vehicle))
             throw new ParkingLotException("vehicle already parked");
-
         this.vehicles.add(vehicle);
     }
 
