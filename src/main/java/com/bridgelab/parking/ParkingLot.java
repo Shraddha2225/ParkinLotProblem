@@ -1,28 +1,31 @@
 package com.bridgelab.parking;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class ParkingLot {
 
+    public DriverType DriverType;
     private int actualCapacity;
-   // private List vehicles;
-    public List<Object> vehicles;
+
+    public enum DriverType{NORMALDRIVER,HANDICAPDRIVER}
+    public List<VehicleParking> vehicles;
     private List<ParkingLotObserver> parkLotObserver;
     private int slot = 0;
-   // private ParkingLotObserver parkingInfo;
 
     public ParkingLot(int capacity) {
-       /* this.vehicles = new ArrayList();
-        this.actualCapacity = capacity;*/
-
         setCapacity(capacity);
         this.parkLotObserver = new ArrayList<>();
     }
 
     public void registerParkingLotOwner(AirportSecurity observer) {
-       // this.parkingInfo = owner;
+        this.parkLotObserver.add(observer);
+    }
+
+    public void registerParkingLotObserver(ParkingLotObserver observer) {
         this.parkLotObserver.add(observer);
     }
 
@@ -37,7 +40,6 @@ public class ParkingLot {
         return vehicles.size();
     }
 
-
     public ArrayList<Integer> getSlot() {
         ArrayList<Integer> emptySlots = new ArrayList<>();
         for (int slot = 0; slot < this.actualCapacity; slot++) {
@@ -51,7 +53,8 @@ public class ParkingLot {
         this.parkingInfo = airportSecurity;
     }*/
 
-    public void park(Object vehicle) throws ParkingLotException {
+    //Functionality To Park Vehicle In ParkingLot
+    public void park(VehicleParking vehicle,DriverType driverType) throws ParkingLotException {
         if(isVehicleParked(vehicle))
             throw new ParkingLotException("vehicle already parked");
         if (vehicles.size() == actualCapacity && !vehicles.contains(null)) {
@@ -59,14 +62,26 @@ public class ParkingLot {
                 observer.capacityIsFull();
             throw new ParkingLotException("parkinglot is full");
     }
-        parked(slot++, vehicle);
+        ArrayList<Integer> emptyList = getEmptyList(driverType);
+        parked(emptyList.get(0),vehicle);
     }
 
-    public void parked(int slot, Object vehicle) throws ParkingLotException {
+
+    //parked functionality
+    public void parked(int slot, VehicleParking vehicle) throws ParkingLotException {
         if (isVehicleParked(vehicle)) {
             throw new ParkingLotException("VEHICLE ALREADY PARK");
         }
         this.vehicles.set(slot, vehicle);
+    }
+
+    public ArrayList<Integer> getEmptyList(DriverType driverType){
+        ArrayList<Integer> emptyParkingSlotList = getSlot();
+        if(DriverType.NORMALDRIVER.equals(driverType))
+            Collections.sort(emptyParkingSlotList,Collections.reverseOrder());
+        if(DriverType.HANDICAPDRIVER.equals(driverType))
+            Collections.sort(emptyParkingSlotList);
+        return emptyParkingSlotList;
     }
 
     public boolean isVehicleParked(Object vehicle) {
@@ -78,7 +93,6 @@ public class ParkingLot {
     public boolean getUnParked(Object vehicle) {
         if ( vehicle == null)  return false;
         if (this.vehicles.contains(vehicle)) {
-            //this.vehicles.remove(vehicle);
             this.vehicles.set(this.vehicles.indexOf(vehicle), null);
             return true;
         }
@@ -90,5 +104,13 @@ public class ParkingLot {
         if(!this.vehicles.contains(vehicle))
             throw new ParkingLotException("Vehicle Is Absent");
         return this.vehicles.indexOf(vehicle);
+    }
+
+    public LocalTime findTimeForVehicle(VehicleParking vehicle) {
+        if(!this.vehicles.contains(vehicle))
+            throw new ParkingLotException("Vehicle Is Absent");
+        if(vehicle.getTime() == null)
+            throw new ParkingLotException("Vehicle Has Not Set Time");
+        return vehicle.getTime();
     }
 }
