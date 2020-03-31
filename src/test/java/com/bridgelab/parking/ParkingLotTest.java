@@ -211,4 +211,18 @@ public class ParkingLotTest {
         boolean isVehicleParked2 = parkingLot.isVehicleParked(vehicle2);
         Assert.assertTrue(isVehicleParked && isVehicleParked1 && isVehicleParked2);
     }
+
+    @Test
+    public void givenDriverTypeHandicap_WhenParkedAtEmptySlot_ShouldReturnTrue() {
+        VehicleParking vehicle2=new VehicleParking();
+        parkingLot.setCapacity(3);
+        parkingLot.initializeParkingLot();
+        parkingLot.park(vehicle, parkingLot.DriverType.HANDICAPDRIVER);
+        parkingLot.park(vehicle1, parkingLot.DriverType.HANDICAPDRIVER);
+        parkingLot.park(vehicle2, parkingLot.DriverType.HANDICAPDRIVER);
+        boolean isVehicleParked = parkingLot.isVehicleParked(vehicle);
+        boolean isVehicleParked1 = parkingLot.isVehicleParked(vehicle1);
+        boolean isVehicleParked2 = parkingLot.isVehicleParked(vehicle2);
+        Assert.assertTrue(isVehicleParked && isVehicleParked1 && isVehicleParked2);
+    }
 }

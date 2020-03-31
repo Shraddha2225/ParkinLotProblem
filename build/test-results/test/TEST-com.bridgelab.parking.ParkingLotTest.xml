@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-31T05:21:58" hostname="DESKTOP-PIERT2Q" time="0.007">
+<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-31T05:26:11" hostname="DESKTOP-PIERT2Q" time="0.006">
   <properties/>
-  <testcase name="givenVehicle_WhenParkedAtEmptySlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.007"/>
+  <testcase name="givenDriverTypeHandicap_WhenParkedAtEmptySlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.006"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
