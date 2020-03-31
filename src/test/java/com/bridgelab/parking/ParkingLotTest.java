@@ -196,4 +196,19 @@ public class ParkingLotTest {
             Assert.assertEquals("Vehicle Has Not Set Time",e.getMessage());
         }
     }
+
+
+    @Test
+    public void givenVehicle_WhenParkedAtEmptySlot_ShouldReturnTrue() {
+        VehicleParking vehicle2=new VehicleParking();
+        parkingLot.setCapacity(3);
+        parkingLot.initializeParkingLot();
+        parkingLot.park(vehicle, parkingLot.DriverType.NORMALDRIVER);
+        parkingLot.park(vehicle1, parkingLot.DriverType.NORMALDRIVER);
+        parkingLot.park(vehicle2, parkingLot.DriverType.NORMALDRIVER);
+        boolean isVehicleParked = parkingLot.isVehicleParked(vehicle);
+        boolean isVehicleParked1 = parkingLot.isVehicleParked(vehicle1);
+        boolean isVehicleParked2 = parkingLot.isVehicleParked(vehicle2);
+        Assert.assertTrue(isVehicleParked && isVehicleParked1 && isVehicleParked2);
+    }
 }
