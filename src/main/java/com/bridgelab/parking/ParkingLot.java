@@ -4,113 +4,90 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ParkingLot {
-
-    public DriverType DriverType;
-    private int actualCapacity;
-
-    public enum DriverType{NORMALDRIVER,HANDICAPDRIVER}
-    public List<VehicleParking> vehicles;
-    private List<ParkingLotObserver> parkLotObserver;
-    private int slot = 0;
+    ParkingAvailabilityObserver informationObserver;
+    private int actualSlotCapacity;
+    List<ParkingSlots> vehicles;
+    ParkingSlots parkingSlots;
+    private int emptyList;
 
     public ParkingLot(int capacity) {
         setCapacity(capacity);
-        this.parkLotObserver = new ArrayList<>();
-    }
-
-    public void registerParkingLotOwner(AirportSecurity observer) {
-        this.parkLotObserver.add(observer);
-    }
-
-    public void registerParkingLotObserver(ParkingLotObserver observer) {
-        this.parkLotObserver.add(observer);
+        informationObserver = ParkingAvailabilityObserver.getInstanceGenerate();
     }
 
     public  void setCapacity(int capacity) {
-        this.actualCapacity = capacity;
-        initializeParkingLot();
+        this.actualSlotCapacity = capacity;
+        initializeParkingLotForVehicle();
     }
 
-    public int initializeParkingLot() {
-        this.vehicles=new ArrayList<>();
-        IntStream.range(0,this.actualCapacity).forEach(slots ->vehicles.add(null));
+    public int initializeParkingLotForVehicle() {
+        this.vehicles = new ArrayList<>();
+        IntStream.range(0,this.actualSlotCapacity).forEach(slots ->vehicles.add(null));
         return vehicles.size();
     }
 
-    public ArrayList<Integer> getSlot() {
+    public ArrayList<Integer> getEmptySlot() {
         ArrayList<Integer> emptySlots = new ArrayList<>();
-        for (int slot = 0; slot < this.actualCapacity; slot++) {
-            if (this.vehicles.get(slot) == null)
-                emptySlots.add(slot);
-        }
+        IntStream.range(0,actualSlotCapacity)
+                .filter(slot->vehicles.get(slot)==null)
+                .forEach(emptySlots::add);
         return emptySlots;
     }
 
-    /*public void registerSecurity(AirportSecurity airportSecurity) {
-        this.parkingInfo = airportSecurity;
-    }*/
-
-    //Functionality To Park Vehicle In ParkingLot
-    public void park(VehicleParking vehicle,DriverType driverType) throws ParkingLotException {
+    public boolean parkVehicle(Vehicle vehicle, EnumDriverType driverType) throws ParkingLotException {
         if(isVehicleParked(vehicle))
-            throw new ParkingLotException("vehicle already parked");
-        if (vehicles.size() == actualCapacity && !vehicles.contains(null)) {
-            for (ParkingLotObserver observer : parkLotObserver)
-                observer.capacityIsFull();
-            throw new ParkingLotException("parkinglot is full");
+            throw new ParkingLotException("vehicle already parked",ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED);
+        if (vehicles.size() == actualSlotCapacity && !vehicles.contains(null)) {
+            informationObserver.InformedParkingFull();
+            throw new ParkingLotException("parkinglot is full", ParkingLotException.ExceptionType.LOT_IS_FULL);
     }
-        ArrayList<Integer> emptyList = getEmptyList(driverType);
-        parked(emptyList.get(0),vehicle);
-    }
-
-
-    //parked functionality
-    public void parked(int slot, VehicleParking vehicle) throws ParkingLotException {
-        if (isVehicleParked(vehicle)) {
-            throw new ParkingLotException("VEHICLE ALREADY PARK");
-        }
-        this.vehicles.set(slot, vehicle);
+        ParkingSlots slots = new ParkingSlots(vehicle,driverType);
+        int emptyList = getEmptyListOfDriverType(driverType);
+        this.vehicles.set(emptyList,slots);
+        return true;
     }
 
-    public ArrayList<Integer> getEmptyList(DriverType driverType){
-        ArrayList<Integer> emptyParkingSlotList = getSlot();
-        if(DriverType.NORMALDRIVER.equals(driverType))
-            Collections.sort(emptyParkingSlotList,Collections.reverseOrder());
-        if(DriverType.HANDICAPDRIVER.equals(driverType))
-            Collections.sort(emptyParkingSlotList);
-        return emptyParkingSlotList;
-    }
+    public int getEmptyListOfDriverType(EnumDriverType driverType){
+         ArrayList<Integer> emptyParkingSlotList = getEmptySlot();
+         if(EnumDriverType.NORMALDRIVER.equals(driverType))
+             Collections.sort(emptyParkingSlotList,Collections.reverseOrder());
+         if(EnumDriverType.HANDICAPDRIVER.equals(driverType))
+             Collections.sort(emptyParkingSlotList);
+         return emptyList;
+     }
 
-    public boolean isVehicleParked(Object vehicle) {
-        if (this.vehicles.contains(vehicle))
-            return true;
+    public boolean isVehicleParked(Vehicle vehicle) {
+        parkingSlots = new ParkingSlots(vehicle);
+        if(this.vehicles.contains(parkingSlots)) return true;
         return false;
     }
 
-    public boolean getUnParked(Object vehicle) {
-        if ( vehicle == null)  return false;
-        if (this.vehicles.contains(vehicle)) {
-            this.vehicles.set(this.vehicles.indexOf(vehicle), null);
+    public boolean getUnParked(Vehicle vehicle) {
+        parkingSlots = new ParkingSlots(vehicle);
+        if (this.vehicles.contains(parkingSlots)) {
+            this.vehicles.set(this.vehicles.indexOf(parkingSlots), null);
             return true;
         }
         return false;
     }
 
-    //find a vehicle if it is parked//
-    public int findVehicleInParkingLot(Object vehicle) {
-        if(!this.vehicles.contains(vehicle))
-            throw new ParkingLotException("Vehicle Is Absent");
-        return this.vehicles.indexOf(vehicle);
+    public int findVehicle(Vehicle vehicle) {
+        parkingSlots = new ParkingSlots(vehicle);
+        if(!this.vehicles.contains(parkingSlots))
+            throw new ParkingLotException("Vehicle Not Present", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        return this.vehicles.indexOf(parkingSlots);
     }
 
-    public LocalTime findTimeForVehicle(VehicleParking vehicle) {
-        if(!this.vehicles.contains(vehicle))
-            throw new ParkingLotException("Vehicle Is Absent");
-        if(vehicle.getTime() == null)
-            throw new ParkingLotException("Vehicle Has Not Set Time");
-        return vehicle.getTime();
+    public List<Integer> getEmptyList() {
+        return IntStream.range(0, this.actualSlotCapacity).filter(slot -> vehicles.get(slot) == null).boxed().collect(Collectors.toList());
+    }
+
+    public LocalTime getFindTimeForPark(Vehicle vehicle) {
+        parkingSlots = new ParkingSlots(vehicle);
+        return  parkingSlots.time;
     }
 }

@@ -8,6 +8,16 @@ public class ParkingLotOwner implements ParkingLotObserver {
         isFullcapacity = true;
     }
 
+    @Override
+    public void setCapacityIsFull() {
+
+    }
+
+    @Override
+    public void setParkingLotAvailable() {
+
+    }
+
     public boolean isCapacityFull() {
         return this.isFullcapacity;
     }
