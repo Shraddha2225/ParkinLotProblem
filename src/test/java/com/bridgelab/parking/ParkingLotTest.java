@@ -315,4 +315,33 @@ public class ParkingLotTest {
             Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
         }
     }
+
+    //UC13//
+    @Test
+    public void givenVehicles_WhenParkedWithBlueColorAndToyota_ShouldReturnListOfPlateNumbers() {
+        ArrayList<String> expectedNumber = new ArrayList<>();
+        Vehicle vehicle2=new Vehicle("Blue","Toyota","MH19 NJ 56781");
+        Vehicle vehicle3 =new Vehicle("Blue","Toyota","MH16 OP 123456");
+        expectedNumber.add("0 Toyota Blue MH16 OP 123456");
+        parkingLotSystem.park(vehicle2,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle3,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        ArrayList<String> sortedVehicleList = parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.NAME_COLOUR,"Toyota","Blue");
+        Assert.assertEquals(expectedNumber,sortedVehicleList);
+    }
+
+    @Test
+    public void givenParkingLot_WhenParkedWithoutBlueColorAndToyota_ShouldThrowException() {
+        Vehicle vehicle2 = new Vehicle("Red","Swift Desire","MH17 OP 98765");
+        Vehicle vehicle3 = new Vehicle("Black","Honda","MH18 BH 845621");
+        parkingLot.setCapacity(3);
+        try {
+            parkingLotSystem.park(vehicle1, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle2, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle3, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.NAME_COLOUR,"Toyota","Blue");
+        }catch (ParkingLotException e)
+        {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
+        }
+    }
 }

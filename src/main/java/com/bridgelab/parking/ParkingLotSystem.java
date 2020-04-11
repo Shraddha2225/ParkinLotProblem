@@ -66,10 +66,10 @@ public class ParkingLotSystem {
         informationObserver.registeredObserver(observer);
     }
 
-    public ArrayList<String> searchVehiclesByGivenFields(VehicleSortedCatagories vehicleSortField, String... Catagory){
+    public ArrayList<String> searchVehiclesByGivenFields(VehicleSortedCatagories vehicleSort, String... catagory){
 
         for (ParkingLot lot: vehiclesList)
-            return lot.searchVehiclesByGivenCatagories(vehicleSortField,Catagory);
+            return lot.searchVehiclesByGivenCatagories(vehicleSort,catagory);
         throw new ParkingLotException("No One Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
     }
 }

@@ -12,7 +12,6 @@ public enum VehicleSortedCatagories {
     private static List<ParkingSlots> vehicle;
     private static Map<VehicleSortedCatagories, IntPredicate> sortFieldPredicateMap = new HashMap<>();
 
-
     public static void initializeVehicleList(List<ParkingSlots> vehicles) {
         vehicle = vehicles;
     }

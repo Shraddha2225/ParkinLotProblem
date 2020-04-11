@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-11T19:07:08" hostname="DESKTOP-PIERT2Q" time="0.055">
+<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-11T19:49:19" hostname="DESKTOP-PIERT2Q" time="0.071">
   <properties/>
-  <testcase name="givenParkingLot_WhenParkedWhiteVehicles_ShouldReturnListOfVehicles" classname="com.bridgelab.parking.ParkingLotTest" time="0.055"/>
+  <testcase name="givenParkingLot_WhenParkedWithoutBlueColorAndToyota_ShouldThrowException" classname="com.bridgelab.parking.ParkingLotTest" time="0.071"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -93,11 +93,11 @@ public class ParkingLot {
     }
 
     public ArrayList<String> searchVehiclesByGivenCatagories(VehicleSortedCatagories vehicleSort, String... catagory){
-        ArrayList<String>vehicleList = new ArrayList<>();
-        VehicleSortedCatagories.initializeVehicleList(vehicles);
+        ArrayList<String>vehicleList=new ArrayList<>();
+        vehicleSort.initializeVehicleList(vehicles);
         IntStream.range(0,actualSlotCapacity)
                 .filter(slot->vehicles.get(slot)!=null)
-                .filter((IntPredicate) vehicleSort.SortVehicleList(catagory).get(vehicleSort))
+                .filter(vehicleSort.SortVehicleList(catagory).get(vehicleSort))
                 .mapToObj(slot->(slot+" "+ vehicles.get(slot).getVehicle().getVehicleBrandName()+" "+vehicles.get(slot).getVehicle().getColor()+" "+vehicles.get(slot).getVehicle().getPlateNumber()))
                 .collect(Collectors.toList())
                 .forEach(vehicleList::add);
