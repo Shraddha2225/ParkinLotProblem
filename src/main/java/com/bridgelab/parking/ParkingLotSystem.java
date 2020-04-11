@@ -31,9 +31,9 @@ public class ParkingLotSystem {
     }
 
 
-    public boolean park(Vehicle vehicle, EnumDriverType driverType) {
+    public boolean park(Vehicle vehicle,VehicleType vehicleType,EnumDriverType driverType) {
         parkingLots = getLotHavingLargeSpace(vehiclesList);
-        return parkingLots.parkVehicle(vehicle, driverType);
+        return parkingLots.parkVehicle(vehicle,vehicleType,driverType);
 
     }
 
@@ -66,4 +66,10 @@ public class ParkingLotSystem {
         informationObserver.registeredObserver(observer);
     }
 
+    public ArrayList<String> searchVehiclesByGivenFields(VehicleSortedCatagories vehicleSortField, String... field){
+
+        for (ParkingLot lot: vehiclesList)
+            return lot.searchVehiclesByGivenCatagories(vehicleSortField,field);
+        throw new ParkingLotException("No One Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+    }
 }

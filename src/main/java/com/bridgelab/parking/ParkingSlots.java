@@ -6,16 +6,19 @@ public class ParkingSlots {
     Vehicle vehicle;
     public LocalTime time;
     public EnumDriverType driver;
+    public VehicleType vehicleTypeOne;
 
     public ParkingSlots(Vehicle vehicle) {
         this.vehicle = vehicle;
         this.time = LocalTime.now();
     }
 
-    public ParkingSlots(Vehicle vehicle,EnumDriverType driverType ) {
+    public ParkingSlots(Vehicle vehicle, VehicleType vehicleType,EnumDriverType driverType ) {
         this.driver = driverType;
         this.vehicle = vehicle;
         this.time=LocalTime.now();
+        this.vehicleTypeOne =vehicleType;
+
     }
 
     public Vehicle getVehicle() {
@@ -28,6 +31,10 @@ public class ParkingSlots {
 
     public EnumDriverType getDriver() {
         return driver;
+    }
+
+    public VehicleType getVehicleTypeOne() {
+        return vehicleTypeOne;
     }
 
     @Override

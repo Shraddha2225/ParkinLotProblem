@@ -1,18 +1,18 @@
 package com.bridgelab.parking;
-
 import java.time.LocalTime;
 
-
 public class Vehicle {
-    private String color;
-    private String vehicleBrandName;
+    String color;
+    String vehicleBrandName;
+    String plateNumber;
 
     public Vehicle(){
     }
 
-    public Vehicle(String color, String vehicleBrandName) {
+    public Vehicle(String color, String vehicleBrandName, String plateNumber) {
         this.color = color;
         this.vehicleBrandName = vehicleBrandName;
+        this.plateNumber = plateNumber;
     }
 
     public String getColor() {
@@ -23,11 +23,7 @@ public class Vehicle {
         return vehicleBrandName;
     }
 
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "color='" + color + '\'' +
-                ", vehicleBrandName='" + vehicleBrandName + '\'' +
-                '}';
+    public String getPlateNumber() {
+        return plateNumber;
     }
 }

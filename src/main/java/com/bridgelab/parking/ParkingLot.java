@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,14 +39,14 @@ public class ParkingLot {
         return emptySlots;
     }
 
-    public boolean parkVehicle(Vehicle vehicle, EnumDriverType driverType) throws ParkingLotException {
+    public boolean parkVehicle(Vehicle vehicle, VehicleType vehicleType,EnumDriverType driverType) throws ParkingLotException {
         if(isVehicleParked(vehicle))
             throw new ParkingLotException("vehicle already parked",ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED);
         if (vehicles.size() == actualSlotCapacity && !vehicles.contains(null)) {
             informationObserver.InformedParkingFull();
             throw new ParkingLotException("parkinglot is full", ParkingLotException.ExceptionType.LOT_IS_FULL);
     }
-        ParkingSlots slots = new ParkingSlots(vehicle,driverType);
+        ParkingSlots slots = new ParkingSlots(vehicle,vehicleType,driverType);
         int emptyList = getEmptyListOfDriverType(driverType);
         this.vehicles.set(emptyList,slots);
         return true;
@@ -58,7 +59,7 @@ public class ParkingLot {
          if(EnumDriverType.HANDICAPDRIVER.equals(driverType))
              Collections.sort(emptyParkingSlotList);
          return emptyList;
-     }
+    }
 
     public boolean isVehicleParked(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);
@@ -89,5 +90,20 @@ public class ParkingLot {
     public LocalTime getFindTimeForPark(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);
         return  parkingSlots.time;
+    }
+
+    public ArrayList<String> searchVehiclesByGivenCatagories(VehicleSortedCatagories vehicleSort, String... catagory){
+        ArrayList<String>vehicleList = new ArrayList<>();
+        VehicleSortedCatagories.initializeVehicleList(vehicles);
+        IntStream.range(0,actualSlotCapacity)
+                .filter(slot->vehicles.get(slot)!=null)
+                .filter((IntPredicate) vehicleSort.SortVehicleList(catagory).get(vehicleSort))
+                .mapToObj(slot->(slot+" "+ vehicles.get(slot).getVehicle().getVehicleBrandName()+" "+vehicles.get(slot).getVehicle().getColor()+" "+vehicles.get(slot).getVehicle().getPlateNumber()))
+                .collect(Collectors.toList())
+                .forEach(vehicleList::add);
+
+        if(vehicleList.isEmpty())
+            throw new ParkingLotException("No One Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        return vehicleList;
     }
 }

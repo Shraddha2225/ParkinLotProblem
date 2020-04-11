@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +33,7 @@ public class ParkingLotTest {
     ///UC1//
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
-            parkingLot.parkVehicle(vehicle,EnumDriverType.NORMALDRIVER);
+            parkingLot.parkVehicle(vehicle,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
             boolean Isparked = parkingLot.isVehicleParked(vehicle);
             Assert.assertTrue(Isparked);
     }
@@ -42,8 +41,8 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenAlReadyParked_ShouldReturnFalse() {
         try {
-            parkingLot.parkVehicle(vehicle,EnumDriverType.NORMALDRIVER);
-            parkingLot.parkVehicle(vehicle,EnumDriverType.NORMALDRIVER);
+            parkingLot.parkVehicle(vehicle,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLot.parkVehicle(vehicle,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
         } catch (ParkingLotException e) {
             Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED,e.type);
         }
@@ -52,10 +51,10 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenParkingLotfull_ShouldThrowException() {
         try{
-            parkingLotSystem.park(vehicle,EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(),VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         }catch (ParkingLotException e){
             Assert.assertEquals(ParkingLotException.ExceptionType.LOT_IS_FULL,e.type);
         }
@@ -64,7 +63,7 @@ public class ParkingLotTest {
     //UC2//
     @Test
     public void givenVehicle_WhenUnParked_ShouldReturnTrue() throws ParkingLotException {
-            parkingLotSystem.park(vehicle,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
             boolean isUnparked = parkingLotSystem.getUnParked(vehicle);
             Assert.assertTrue(isUnparked);
     }
@@ -83,9 +82,9 @@ public class ParkingLotTest {
     public void givenWhenParkingLotIsFull_ShouldInformTheOwner() {
         parkingLotSystem.registeredObserver(lotOwner);
         try {
-            parkingLotSystem.park(vehicle,EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(), EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(), EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE, EnumDriverType.NORMALDRIVER);
         } catch (ParkingLotException e) {
             boolean capacityFull = lotOwner.isCapacityFull();
             Assert.assertTrue(capacityFull);
@@ -95,8 +94,8 @@ public class ParkingLotTest {
     @Test
     public void givenCapacityIs2_ShouldAbleToPark2Vehicle() {
         parkingLot.setCapacity(2);
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(vehicle1, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle1, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean isParked1 = parkingLotSystem.isVehicleParked(vehicle);
         boolean isParked2 = parkingLotSystem.isVehicleParked(vehicle1);
         Assert.assertFalse(isParked1 && isParked2);
@@ -108,9 +107,9 @@ public class ParkingLotTest {
     public void givenWhenLotIsFull_ShouldInformTheSecurity() {
         parkingLotSystem.registeredObserver(airportSecurity);
         try {
-            parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
-            parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         } catch (ParkingLotException e) {
             boolean capacityFull = airportSecurity.isCapacityFull();
             Assert.assertTrue(capacityFull);
@@ -121,8 +120,8 @@ public class ParkingLotTest {
     public void givenVehicle_WhenLotSpaceAgain_ShouldInformTheOwner() {
         Vehicle vehicle2 = new Vehicle();
         parkingLotSystem.registeredObserver(lotOwner);
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(vehicle2, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle2, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         parkingLotSystem.getUnParked(vehicle);
         assertFalse(lotOwner.isCapacityFull());
     }
@@ -130,7 +129,7 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenLotSpaceAgain_ShouldInformTheAirPortSecurity() {
         parkingLotSystem.registeredObserver(airportSecurity);
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         parkingLotSystem.getUnParked(vehicle);
         assertFalse(airportSecurity.isCapacityFull());
     }
@@ -159,8 +158,8 @@ public class ParkingLotTest {
         vehicleList.add(1);
         vehicleList.add(2);
         parkingLot.setCapacity(3);
-        parkingLotSystem.park(vehicle,EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         parkingLotSystem.getUnParked(vehicle);
         List<Integer> emptySlotList = parkingLot.getEmptyList();
         Assert.assertEquals(vehicleList, emptySlotList);
@@ -170,22 +169,22 @@ public class ParkingLotTest {
     public void givenParkingLotOnEmptySlot_ShouldReturnTrue() throws ParkingLotException {
         parkingLot.setCapacity(10);
         parkingLot.initializeParkingLotForVehicle();
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean vehiclePark = parkingLot.isVehicleParked(vehicle);
         assertTrue(vehiclePark);
     }
 
     @Test
     public void givenVehicle_WhenPresent_ShouldReturnVehicleParkingSlot() {
-        parkingLotSystem.park(new Vehicle(),EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(vehicle,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         int vehicleSlot = parkingLotSystem.findVehicleInParkingLot(this.vehicle);
         Assert.assertEquals(0,vehicleSlot);
     }
 
     @Test
     public void givenVehicle_WhenNotPresent_ShouldReturnException() {
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle,VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         try {
             parkingLotSystem.findVehicleInParkingLot(new Vehicle());
         } catch (ParkingLotException e) {
@@ -196,7 +195,7 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenParkWithTime_ShouldReturnParkingTime() {
         parkingLot.setCapacity(5);
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         ParkingSlots parkingSlot=new ParkingSlots(vehicle);
         LocalTime time = parkingSlot.time;
         LocalTime timeOfVehicle = parkingLotSystem.getFindTimeForVehicle(vehicle);
@@ -223,7 +222,7 @@ public class ParkingLotTest {
         assertTrue(lotAdded && lot1Added);
     }
 
-
+    //UC9//
     @Test
     public void givenParkingLotSystem_WhenVehicleShouldParkInEvenlyInDistributedLots_ShouldReturnTrue() {
         parkingLot.setCapacity(5);
@@ -236,31 +235,50 @@ public class ParkingLotTest {
         Vehicle vehicle4 = new Vehicle();
         parkingLotSystem.getAddedLot(parkingLot1);
 
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean isVehiclePark1 = parkingLotSystem.isVehicleParked(vehicle);
-        parkingLotSystem.park(vehicle2, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle2, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean isVehiclePark2 = parkingLotSystem.isVehicleParked(vehicle2);
-        parkingLotSystem.park(vehicle3, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle3, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean isVehiclePark3 = parkingLotSystem.isVehicleParked(vehicle3);
-        parkingLotSystem.park(vehicle4, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle4, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
         boolean isVehiclePark4 = parkingLotSystem.isVehicleParked(vehicle4);
         assertTrue(isVehiclePark1 && isVehiclePark2 && isVehiclePark3 && isVehiclePark4);
     }
 
+    //UC10//
     @Test
     public void givenParkedAtEmptySlot_WhenDriverTypeHandicap_ShouldReturnTrue() {
         parkingLot.setCapacity(5);
         Vehicle vehicle2 = new Vehicle();
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(new Vehicle(), EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(vehicle2, EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(new Vehicle(), EnumDriverType.HANDICAPDRIVER);
+        parkingLotSystem.park(vehicle, VehicleType.LARGE, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle2, VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(new Vehicle(), VehicleType.LARGE,EnumDriverType.HANDICAPDRIVER);
         parkingLotSystem.getUnParked(vehicle2);
         parkingLotSystem.getUnParked(vehicle);
-        parkingLotSystem.park(vehicle, EnumDriverType.NORMALDRIVER);
-        parkingLotSystem.park(vehicle2, EnumDriverType.HANDICAPDRIVER);
+        parkingLotSystem.park(vehicle,  VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle2, VehicleType.LARGE, EnumDriverType.HANDICAPDRIVER);
         int vehicleParkedLocation = parkingLotSystem.findVehicleInParkingLot(vehicle2);
         assertEquals(0, vehicleParkedLocation);
     }
 
+    //UC11//
+    @Test
+    public void givenLargeVehicle_WhenParkByEvenlyDistribution_ShouldReturnTrue() {
+        parkingLot.setCapacity(3);
+        parkingLotSystem.park(vehicle,VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        boolean isVehicleParked = parkingLotSystem.isVehicleParked(vehicle);
+        Assert.assertTrue(isVehicleParked);
+    }
+
+    @Test
+    public void givenLargeVehicle_WhenParkByEvenlyDistribution_ShouldReturnEmptySlotAfterLargeVehiclePark() {
+        int expectedSlot=0;
+        parkingLot.setCapacity(3);
+        parkingLotSystem.park(vehicle,VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.isVehicleParked(vehicle);
+        int emptySlot = parkingLotSystem.findVehicleInParkingLot(vehicle);
+        Assert.assertEquals(expectedSlot,emptySlot);
+    }
 }
