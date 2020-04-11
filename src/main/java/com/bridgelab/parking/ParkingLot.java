@@ -83,9 +83,9 @@ public class ParkingLot {
         return this.vehicles.indexOf(parkingSlots);
     }
 
-    public List<Integer> getEmptyList() {
+    /*public List<Integer> getEmptyList() {
         return IntStream.range(0, this.actualSlotCapacity).filter(slot -> vehicles.get(slot) == null).boxed().collect(Collectors.toList());
-    }
+    }*/
 
     public LocalTime getFindTimeForPark(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);
