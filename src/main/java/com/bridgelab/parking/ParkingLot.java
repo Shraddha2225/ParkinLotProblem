@@ -55,15 +55,6 @@ public class ParkingLot {
 
     }
 
-    /*public int getEmptyListOfDriverType(EnumDriverType driverType){
-         ArrayList<Integer> emptyParkingSlotList = getEmptySlot();
-         if(EnumDriverType.NORMALDRIVER.equals(driverType))
-             Collections.sort(emptyParkingSlotList,Collections.reverseOrder());
-         if(EnumDriverType.HANDICAPDRIVER.equals(driverType))
-             Collections.sort(emptyParkingSlotList);
-         return emptyList;
-    }
-*/
     public boolean isVehicleParked(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);
         if(this.vehicles.contains(parkingSlots)) return true;
@@ -85,10 +76,6 @@ public class ParkingLot {
             throw new ParkingLotException("Vehicle Not Present", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return this.vehicles.indexOf(parkingSlots);
     }
-
-    /*public List<Integer> getEmptyList() {
-        return IntStream.range(0, this.actualSlotCapacity).filter(slot -> vehicles.get(slot) == null).boxed().collect(Collectors.toList());
-    }*/
 
     public LocalTime getFindTimeForPark(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);

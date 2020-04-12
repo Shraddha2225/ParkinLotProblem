@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelab.parking.Mockito.ParkingLotSystemTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-04-12T22:17:51" hostname="DESKTOP-PIERT2Q" time="0.458">
+  <properties/>
+  <testcase name="testSearchVehiclesByGivenFields_ShouldReturnException" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.411"/>
+  <testcase name="testSearchVehiclesByGivenFields" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.007"/>
+  <testcase name="testFindVehicle_ShouldReturnException" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.003"/>
+  <testcase name="testUnParkedVehicle_ShouldReturnTrue" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.001"/>
+  <testcase name="testParkedVehicle_ShouldReturnTrue" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.028"/>
+  <testcase name="testIsVehicleParked_ShouldReturnTrue" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.003"/>
+  <testcase name="testIsVehicleParked_ShouldReturnFalse" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.001"/>
+  <testcase name="testFindVehicle_ShouldReturnSlot" classname="com.bridgelab.parking.Mockito.ParkingLotSystemTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
