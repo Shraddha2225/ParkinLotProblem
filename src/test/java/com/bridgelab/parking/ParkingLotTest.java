@@ -396,9 +396,45 @@ public class ParkingLotTest {
             parkingLotSystem.getUnParked(vehicle2);
             parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.TIME_IN_MINUTES,"30");
         }catch (ParkingLotException e){
-            //System.out.println("abcd");
             Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
         }
     }
 
+    //UC16//
+    @Test
+    public void givenDriverTypeAndVehicleType_WhenVehicleParked_ShouldReturnDetails() {
+        List<String> expectedList=new ArrayList<>();
+        Vehicle vehicle2 = new Vehicle("White","BMW","MH18 BN 78963");
+        Vehicle vehicle3 = new Vehicle("Yellow","Swift","MH20 TY 01210");
+        Vehicle vehicle4 = new Vehicle("Wine","Honda","MH19 BO 4920");
+        Vehicle vehicle5 = new Vehicle("Black","Volvo","MH24 AE 84235");
+        Vehicle vehicle6 = new Vehicle("Blue","Suzuki","MH17 UH 32541");
+        parkingLot.setCapacity(10);
+        expectedList.add("0 Toyota White MH19 AB 2341");
+        expectedList.add("2 Swift Yellow MH20 TY 01210");
+        expectedList.add("4 Volvo Black MH24 AE 84235");
+        expectedList.add("5 Suzuki Blue MH17 UH 32541");
+        parkingLotSystem.park(vehicle,VehicleType.SMALL,EnumDriverType.HANDICAPDRIVER);
+        parkingLotSystem.park(vehicle2,VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle3,VehicleType.SMALL,EnumDriverType.HANDICAPDRIVER);
+        parkingLotSystem.park(vehicle4,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle5,VehicleType.SMALL,EnumDriverType.HANDICAPDRIVER);
+        parkingLotSystem.park(vehicle6,VehicleType.SMALL,EnumDriverType.HANDICAPDRIVER);
+        List<String> vehiclesDetails = parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.DRIVER_VEHICLE_TYPE,"SMALL","HANDICAPDRIVER");
+        Assert.assertEquals(expectedList,vehiclesDetails);
+    }
+
+    @Test
+    public void givenDriverTypeAndVehicleType_WhenVehicleNotParked_ShouldReturnException() {
+        Vehicle vehicle2 = new Vehicle("White","BMW","MH18 BN 78963");
+        Vehicle vehicle4 = new Vehicle("Wine","Honda","MH19 BO 4920");
+        parkingLot.setCapacity(10);
+        try {
+            parkingLotSystem.park(vehicle2,VehicleType.LARGE,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle4,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.DRIVER_VEHICLE_TYPE, "SMALL", "HANDICAPDRIVER");
+        }catch (ParkingLotException e) {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
+        }
+    }
 }
