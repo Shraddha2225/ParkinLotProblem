@@ -372,4 +372,33 @@ public class ParkingLotTest {
         }
     }
 
+    //UC15
+    @Test
+    public void givenParkingLot_WhenParkedBefore30Minutes_ShouldReturnListOfSlots() {
+        Vehicle vehicle2 = new Vehicle("White","BMW","MH18 BN 78963");
+        Vehicle vehicle3 = new Vehicle("Black","BMW","MH20 TY 01210");
+        carsExpectedList.add("0 BMW White MH18 BN 78963");
+        carsExpectedList.add("1 Swift Yellow MH20 GH 4563");
+        carsExpectedList.add("2 BMW Black MH20 TY 01210");
+        parkingLot.setCapacity(3);
+        parkingLotSystem.park(vehicle2,VehicleType.SMALL, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle1, VehicleType.SMALL, EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle3,VehicleType.SMALL, EnumDriverType.NORMALDRIVER);
+        ArrayList sortedVehicleList = parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.TIME_IN_MINUTES,"30");
+        Assert.assertEquals(carsExpectedList, sortedVehicleList);
+    }
+
+    @Test
+    public void givenParkingLot_WhenNoOneVehicleParkedBefore30Minutes_ShouldReturnException() {
+        Vehicle vehicle2 = new Vehicle("White","BMW","MH18 BN 78963");
+        try {
+            parkingLotSystem.park(vehicle2, VehicleType.SMALL, EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.getUnParked(vehicle2);
+            parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.TIME_IN_MINUTES,"30");
+        }catch (ParkingLotException e){
+            //System.out.println("abcd");
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
+        }
+    }
+
 }
