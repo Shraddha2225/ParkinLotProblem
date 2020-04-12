@@ -27,7 +27,7 @@ public class ParkingLotSystem {
     }
 
     public ParkingLot getLotHavingLargeSpace(List<ParkingLot> parkingLots) {
-        return parkingLots.stream().sorted(Comparator.comparing(list -> list.getEmptySlot().size(), Comparator.reverseOrder())).collect(Collectors.toList()).get(0);
+        return parkingLots.stream().sorted(Comparator.comparing(list -> list.getEmptySlotList().size(), Comparator.reverseOrder())).collect(Collectors.toList()).get(0);
     }
 
 

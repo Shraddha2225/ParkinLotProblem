@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-11T19:49:19" hostname="DESKTOP-PIERT2Q" time="0.071">
+<testsuite name="com.bridgelab.parking.ParkingLotTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2020-04-12T20:17:01" hostname="DESKTOP-PIERT2Q" time="0.102">
   <properties/>
-  <testcase name="givenParkingLot_WhenParkedWithoutBlueColorAndToyota_ShouldThrowException" classname="com.bridgelab.parking.ParkingLotTest" time="0.071"/>
+  <testcase name="givenLargeVehicle_WhenParkByEvenlyDistribution_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.05"/>
+  <testcase name="givenVehicle_WhenUnParked_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
+  <testcase name="givenVehicles_WhenParkedWithBlueColorAndToyota_ShouldReturnListOfPlateNumbers" classname="com.bridgelab.parking.ParkingLotTest" time="0.009"/>
+  <testcase name="givenVehicle_WhenParkedInParkingLot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLot_WhenInitialize_ShouldReturnParkingCapacity" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_WhenParkWithTime_ShouldReturnParkingTime" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_WhenPresent_ShouldReturnSlot" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLot_WhenParkedWithoutBlueColorAndToyota_ShouldThrowException" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenCapacityIs2_ShouldAbleToPark2Vehicle" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_WhenParkedAtEmptySlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenLargeVehicle_WhenParkByEvenlyDistribution_ShouldReturnEmptySlotAfterLargeVehiclePark" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_WhenNotPresent_ShouldReturnException" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_WhenLotSpaceIsAvailableAfterFull_ShouldInformTheOwnerAndReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.003"/>
+  <testcase name="givenWhenLotIsFull_ShouldInformTheSecurity" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_WhenLotSpaceIsAvailableAfterFull_ShouldInformTheAirPortSecurityAndReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenDriverTypeHandicap_WhenParkedAtNearestSlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
+  <testcase name="givenParkingLot_WhenNoOneWhiteVehiclesParked_ShouldThrowException" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenWhenParkingLotIsFull_ShouldInformTheOwner" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLot_WhenParkedWhiteVehicles_ShouldReturnListOfVehicles" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
+  <testcase name="givenParkingLot_WhenParkWithProvidedSlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.003"/>
+  <testcase name="givenVehicle_WhenAlReadyParked_ShouldReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="AfterParkAndUnParkVehicles_ShouldReturnEmptySlots" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenDriverTypeHandicap_WhenParkedAtEmptySlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLot_WhenAdded_ShouldReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.002"/>
+  <testcase name="givenParkingLot_ShouldReturnAvailableSlots" classname="com.bridgelab.parking.ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicleForParkingOnEmptySlot_WhenParkWithProvidedEmptySlot_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_WhenUnParked_ShouldReturnFalse" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLot_WhenAdded_ShouldReturnTrue" classname="com.bridgelab.parking.ParkingLotTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

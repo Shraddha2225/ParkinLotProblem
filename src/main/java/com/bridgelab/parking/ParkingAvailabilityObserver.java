@@ -32,6 +32,4 @@ public class ParkingAvailabilityObserver {
     public void registeredObserver(ParkingLotObserver observer) {
         ListOfObservers.add(observer);
     }
-
-
 }

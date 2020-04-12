@@ -31,7 +31,7 @@ public class ParkingLot {
         return vehicles.size();
     }
 
-    public ArrayList<Integer> getEmptySlot() {
+    public ArrayList<Integer> getEmptySlotList() {
         ArrayList<Integer> emptySlots = new ArrayList<>();
         IntStream.range(0,actualSlotCapacity)
                 .filter(slot->vehicles.get(slot)==null)
@@ -46,13 +46,16 @@ public class ParkingLot {
             informationObserver.InformedParkingFull();
             throw new ParkingLotException("parkinglot is full", ParkingLotException.ExceptionType.LOT_IS_FULL);
     }
-        ParkingSlots slots = new ParkingSlots(vehicle,vehicleType,driverType);
-        int emptyList = getEmptyListOfDriverType(driverType);
-        this.vehicles.set(emptyList,slots);
+        parkingSlots = new ParkingSlots(vehicle,vehicleType,driverType);
+        ArrayList <Integer> emptyList = driverType.getEmptyList(getEmptySlotList());
+        Collections.sort(emptyList);
+        int emptySlot = vehicleType.getEmptySlot(emptyList);
+        this.vehicles.set(emptySlot,parkingSlots);
         return true;
+
     }
 
-    public int getEmptyListOfDriverType(EnumDriverType driverType){
+    /*public int getEmptyListOfDriverType(EnumDriverType driverType){
          ArrayList<Integer> emptyParkingSlotList = getEmptySlot();
          if(EnumDriverType.NORMALDRIVER.equals(driverType))
              Collections.sort(emptyParkingSlotList,Collections.reverseOrder());
@@ -60,7 +63,7 @@ public class ParkingLot {
              Collections.sort(emptyParkingSlotList);
          return emptyList;
     }
-
+*/
     public boolean isVehicleParked(Vehicle vehicle) {
         parkingSlots = new ParkingSlots(vehicle);
         if(this.vehicles.contains(parkingSlots)) return true;
