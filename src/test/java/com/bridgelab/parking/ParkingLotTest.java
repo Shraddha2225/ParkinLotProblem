@@ -339,4 +339,37 @@ public class ParkingLotTest {
             Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
         }
     }
+
+    //UC14//
+    @Test
+    public void givenParkingLot_WhenParkedABMWVehicle_ShouldReturnListOfSlots() {
+        ArrayList<String> expectedList=new ArrayList<>();
+        Vehicle vehicle2 = new Vehicle("White","BMW","MH18 BN 78963");
+        Vehicle vehicle3 = new Vehicle("Black","BMW","MH20 TY 01210");
+        expectedList.add("0 BMW White MH18 BN 78963");
+        expectedList.add("2 BMW Black MH20 TY 01210");
+        parkingLot.setCapacity(3);
+        parkingLotSystem.park(vehicle2, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle1, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        parkingLotSystem.park(vehicle3,VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+        ArrayList sortedVehicleList = parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.NAME,"BMW");
+        Assert.assertEquals(expectedList, sortedVehicleList);
+    }
+
+    @Test
+    public void givenParkingLot_WhenNoOneBMWVehicleParked_ShouldThrowException() {
+        Vehicle vehicle2 = new Vehicle("Red","Swift Desire","MH17 OP 98765");
+        Vehicle vehicle3 = new Vehicle("Black","Honda","MH18 BH 845621");
+        parkingLot.setCapacity(3);
+        try {
+            parkingLotSystem.park(vehicle1, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle2, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.park(vehicle3, VehicleType.SMALL,EnumDriverType.NORMALDRIVER);
+            parkingLotSystem.searchVehiclesByGivenFields(VehicleSortedCatagories.NAME,"BMW");
+        }catch (ParkingLotException e)
+        {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,e.type);
+        }
+    }
+
 }
