@@ -36,7 +36,4 @@ public class AirportSecurityTest {
         Assert.assertTrue(airportSecurity.isCapacityFull());
     }
 
-
-
-
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelab.parking.Mockito.TestParkingLot" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-13T00:26:20" hostname="DESKTOP-PIERT2Q" time="0.889">
+  <properties/>
+  <testcase name="parkFunctionTest" classname="com.bridgelab.parking.Mockito.TestParkingLot" time="0.889"/>
+  <system-out><![CDATA[[MockitoHint] TestParkingLot.parkFunctionTest (see javadoc for MockitoHint):
+[MockitoHint] 1. Unused -> at com.bridgelab.parking.Mockito.TestParkingLot.parkFunctionTest(TestParkingLot.java:41)
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
