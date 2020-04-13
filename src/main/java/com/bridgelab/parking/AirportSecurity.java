@@ -1,24 +1,24 @@
 package com.bridgelab.parking;
 
 public class AirportSecurity implements ParkingLotObserver {
-    private boolean isFullcapacity;
+    private boolean isFullCapacity;
 
     @Override
     public void capacityIsFull() {
-        isFullcapacity = true;
+        isFullCapacity = true;
     }
 
     @Override
     public void setCapacityIsFull() {
-
+        isFullCapacity = true;
     }
 
     @Override
     public void setParkingLotAvailable() {
-
+        isFullCapacity = false;
     }
 
     public boolean isCapacityFull() {
-        return this.isFullcapacity;
+        return this.isFullCapacity;
     }
 }

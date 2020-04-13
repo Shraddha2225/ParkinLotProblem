@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelab.parking.Mockito.AirportSecurityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-13T00:03:24" hostname="DESKTOP-PIERT2Q" time="3.021">
+  <properties/>
+  <testcase name="givenMockitoTest_WhenCheckSecurityClassWithCheckCapacityIsFull" classname="com.bridgelab.parking.Mockito.AirportSecurityTest" time="3.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
